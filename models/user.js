@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    about: {
+    address: {
+        type: String,
+        trim: true,
+    },
+    phoneNumber: {
         type: String,
         trim: true,
     },
@@ -27,10 +31,6 @@ const userSchema = new mongoose.Schema({
     role: {
         type: Number,
         default: 0,
-    },
-    history: {
-        type: Array,
-        default: [],
     },
 }, { timestamps: true });
 
