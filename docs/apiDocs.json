@@ -1,0 +1,8 @@
+{
+    "/": "api docs",
+    "/api/signup": "signup",
+    "/api/signin": "signin",
+    "/api/signout": "signout",
+    "/api/forgot-password": "forgot password",
+    "/api/reset-password": "reset password"
+}
