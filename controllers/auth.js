@@ -1,18 +1,18 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken"); // to generate signed token
 const { sendEmail } = require("../helpers/sendEmail");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const _ = require("lodash");
 
 exports.signup = (req, res) => {
     const user = new User(req.body);
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
-                err: errorHandler(err),
+                error: "Email is taken",
             });
         }
         user.salt = undefined;
-        user.hash_password = undefined;
+        user.hashed_password = undefined;
         res.json({
             user,
         });
