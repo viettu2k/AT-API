@@ -97,7 +97,6 @@ exports.resetPassword = (req, res) => {
     const { resetPasswordLink, newPassword } = req.body;
 
     User.findOne({ resetPasswordLink }, (err, user) => {
-        // if err or no user
         if (err || !user)
             return res.status("401").json({
                 error: "Invalid Link!",
