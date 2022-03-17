@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
 const cors = require("cors");
+const fs = require("fs");
 require("dotenv").config();
 
 // import routes
