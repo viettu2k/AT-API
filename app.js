@@ -10,6 +10,7 @@ require("dotenv").config();
 // import routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const classRoomRoutes = require("./routes/classRoom");
 
 // app
 const app = express();
@@ -21,9 +22,9 @@ mongoose.connect(process.env.DATABASE).then(() => console.log("DB connected"));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(
-    express.urlencoded({
-        extended: true,
-    })
+  express.urlencoded({
+    extended: true,
+  })
 );
 app.use(cookieParser());
 app.use(expressValidator());
@@ -31,23 +32,24 @@ app.use(cors());
 
 // apiDocs
 app.get("/", (req, res) => {
-    fs.readFile("docs/apiDocs.json", (err, data) => {
-        if (err) {
-            res.status(400).json({
-                error: err,
-            });
-        }
-        const docs = JSON.parse(data);
-        res.json(docs);
-    });
+  fs.readFile("docs/apiDocs.json", (err, data) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+    const docs = JSON.parse(data);
+    res.json(docs);
+  });
 });
 
 // routes middleware
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api", classRoomRoutes);
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
