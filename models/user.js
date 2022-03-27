@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v1: uuidv1 } = require("uuid");
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -17,37 +18,72 @@ const userSchema = new mongoose.Schema({
     },
     hashed_password: {
         type: String,
-        required: true,
-    },
-    resetPasswordLink: {
-        data: String,
-        default: "",
     },
     salt: String,
+    address: {
+        type: String,
+        trim: true,
+    },
+    description: {
+        type: String,
+        trim: true,
+        maxlength: 2000,
+    },
+    phoneNumber: {
+        type: String,
+        maxlength: 11,
+    },
+    dob: {
+        type: Date,
+    },
     role: {
         type: Number,
         default: 0,
     },
+    histories: [{
+        vaccinationName: String,
+        vaccineName: String,
+        timeConsuming: Number,
+        status: { type: Boolean, default: false },
+        vaccinationId: { type: ObjectId, ref: "User" },
+        vaccinationTime: { type: Date },
+        created: {
+            type: Date,
+            default: Date.now,
+        },
+    },],
+    resetPasswordLink: {
+        data: String,
+    },
+    references: {
+        type: ObjectId,
+        ref: "User",
+    },
+    photo: {
+        data: Buffer,
+        contentType: String,
+    },
+    members: [{ name: String, id: { type: ObjectId, ref: "User" } }],
 }, { timestamps: true });
 
 // virtual field
 userSchema
     .virtual("password")
-    .set(function(password) {
+    .set(function (password) {
         this._password = password;
         this.salt = uuidv1();
         this.hashed_password = this.encryptPassword(password);
     })
-    .get(function() {
+    .get(function () {
         return this._password;
     });
 
 userSchema.methods = {
-    authenticate: function(plainText) {
+    authenticate: function (plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;
     },
 
-    encryptPassword: function(password) {
+    encryptPassword: function (password) {
         if (!password) return "";
         try {
             return crypto
