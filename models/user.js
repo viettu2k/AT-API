@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v1: uuidv1 } = require("uuid");
-const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -24,11 +23,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    description: {
-        type: String,
-        trim: true,
-        maxlength: 2000,
-    },
     phoneNumber: {
         type: String,
         maxlength: 11,
@@ -40,30 +34,13 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    histories: [{
-        vaccinationName: String,
-        vaccineName: String,
-        timeConsuming: Number,
-        status: { type: Boolean, default: false },
-        vaccinationId: { type: ObjectId, ref: "User" },
-        vaccinationTime: { type: Date },
-        created: {
-            type: Date,
-            default: Date.now,
-        },
-    },],
     resetPasswordLink: {
         data: String,
-    },
-    references: {
-        type: ObjectId,
-        ref: "User",
     },
     photo: {
         data: Buffer,
         contentType: String,
     },
-    members: [{ name: String, id: { type: ObjectId, ref: "User" } }],
 }, { timestamps: true });
 
 // virtual field

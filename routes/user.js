@@ -3,10 +3,18 @@ const router = express.Router();
 
 const { requireSignin, isAuth } = require("../controllers/auth");
 
-const { userById, read, update } = require("../controllers/user");
+const {
+    userById,
+    read,
+    update,
+    changePassword,
+    userPhoto,
+} = require("../controllers/user");
 
 router.get("/users/:userId", requireSignin, isAuth, read);
-router.put("/users/:userId", requireSignin, update);
+router.put("/users/:userId", requireSignin, isAuth, update);
+router.put("users/change-password", requireSignin, isAuth, changePassword);
+router.get("/users/photo/:userId", userPhoto);
 
 router.param("userId", userById);
 

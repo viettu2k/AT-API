@@ -6,7 +6,7 @@ const {
     signin,
     forgotPassword,
     resetPassword,
-    signout
+    signout,
 } = require("../controllers/auth");
 const { userSignupValidator, passwordResetValidator } = require("../validator");
 

@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const formidable = require("formidable");
+const _ = require("lodash");
+const fs = require("fs");
 
 exports.userById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
@@ -22,6 +25,7 @@ exports.update = (req, res) => {
     // console.log("incoming form data: ", form);
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
+        console.log(err);
         if (err) {
             return res.status(400).json({
                 error: "Photo could not be uploaded",
@@ -48,4 +52,40 @@ exports.update = (req, res) => {
             res.json(result);
         });
     });
+};
+
+exports.changePassword = (req, res) => {
+    const { id, newPassword } = req.body;
+
+    User.findOne({ id }, (err, user) => {
+        if (err || !user)
+            return res.status("401").json({
+                error: "Invalid id!",
+            });
+
+        const updatedFields = {
+            password: newPassword,
+        };
+
+        user = _.extend(user, updatedFields);
+        // user.updated = Date.now();
+        user.save((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err,
+                });
+            }
+            res.json({
+                message: `Great! Now you can login with your new password.`,
+            });
+        });
+    });
+};
+
+exports.userPhoto = (req, res, next) => {
+    if (req.profile.photo.data) {
+        res.set(("Content-Type", req.profile.photo.contentType));
+        return res.send(req.profile.photo.data);
+    }
+    next();
 };
