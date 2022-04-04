@@ -10,7 +10,7 @@ require("dotenv").config();
 // import routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
-const classRoomRoutes = require("./routes/classroom");
+const classroomRoutes = require("./routes/classroom");
 
 // app
 const app = express();
@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 // routes middleware
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-app.use("/api", classRoomRoutes);
+app.use("/api", classroomRoutes);
 
 const port = process.env.PORT || 3000;
 
