@@ -3,7 +3,7 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 
 exports.create = (req, res) => {
-    const classRoom = new ClassRoom({...req.body, createdBy: req.params });
+    const classRoom = new ClassRoom({...req.body, createdBy: req.profile._id });
     classRoom.save((err, data) => {
         if (err) {
             return res.status(400).json({
