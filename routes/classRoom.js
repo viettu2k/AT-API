@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, update } = require("../controllers/classRoom");
+const { create, update } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 

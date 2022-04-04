@@ -1,10 +1,13 @@
-const ClassRoom = require("../models/classRoom");
+const Classroom = require("../models/classroom");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 
 exports.create = (req, res) => {
-    const classRoom = new ClassRoom({...req.body, createdBy: req.profile._id });
-    classRoom.save((err, data) => {
+    const classroom = new Classroom({
+        ...req.body,
+        createdBy: req.profile._id,
+    });
+    classroom.save((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
@@ -15,9 +18,9 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    let classRoom = req.classRoom;
-    classRoom = _.extend(classRoom, req.body);
-    classRoom.save((err, data) => {
+    let classroom = req.classroom;
+    classroom = _.extend(classroom, req.body);
+    classroom.save((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
@@ -28,7 +31,7 @@ exports.update = (req, res) => {
 };
 
 exports.listByUser = (req, res) => {
-    ClassRoom.find({ createdBy: req.profile._id })
+    Classroom.find({ createdBy: req.profile._id })
         .populate("createdBy", "_id")
         .sort("-createdAt")
         .exec((err, classRooms) => {
