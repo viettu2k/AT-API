@@ -16,7 +16,9 @@ const classroomRoutes = require("./routes/classroom");
 const app = express();
 
 // connect db
-mongoose.connect(process.env.DATABASE).then(() => console.log("DB connected"));
+mongoose
+    .connect(process.env.DATABASE)
+    .then(() => console.log("DB connected :D"));
 
 // middlewares
 app.use(morgan("dev"));
