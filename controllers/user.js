@@ -59,9 +59,9 @@ exports.changePassword = (req, res) => {
 
   const { _id } = req.profile;
 
-  User.findOne({ _id }, (err, user) => {
+  User.findById({ _id }, (err, user) => {
     if (err || !user)
-      return res.status("401").json({
+      return res.status(401).json({
         error: "Invalid id!",
       });
 

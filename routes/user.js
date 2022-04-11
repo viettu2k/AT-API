@@ -12,13 +12,13 @@ const {
 } = require("../controllers/user");
 
 router.get("/users/:userId", requireSignin, isAuth, read);
-router.put("/users/:userId", requireSignin, isAuth, update);
 router.put(
-  "users/:userId/change-password",
+  "/users/:userId/change-password",
   requireSignin,
   isAuth,
   changePassword
 );
+router.put("/users/:userId", requireSignin, isAuth, update);
 router.get("/users/photo/:userId", userPhoto);
 
 router.param("userId", userById);
