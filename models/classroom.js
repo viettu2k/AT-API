@@ -1,18 +1,27 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const classroomSchema = new mongoose.Schema({
+const classroomSchema = new mongoose.Schema(
+  {
     className: {
-        type: String,
-        trim: true,
-        required: true,
-        maxlength: 50,
+      type: String,
+      trim: true,
+      required: true,
+      maxlength: 50,
     },
-    participants: [{
+    participants: [
+      {
+        studentId: String,
         studentName: String,
-        id: String,
-    }, ],
+        studentPhoto: {
+          data: Buffer,
+          contentType: String,
+        },
+      },
+    ],
     createdBy: { type: ObjectId, ref: "User" },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Classroom", classroomSchema);
