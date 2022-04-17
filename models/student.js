@@ -10,7 +10,7 @@ const studentSchema = new mongoose.Schema(
       required: true,
       maxlength: 50,
     },
-    studentPhoto: {
+    photo: {
       data: Buffer,
       contentType: String,
     },

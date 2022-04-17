@@ -29,15 +29,15 @@ exports.create = (req, res) => {
     const { _id } = req.classroom;
     let student = new Student({ ...fields, classId: _id });
 
-    if (files.studentPhoto) {
-      if (files.studentPhoto.size > 1000000) {
-        return res.status(400).json({
-          error: "Image should be less than 1mb in size",
-        });
-      }
-      student.studentPhoto.data = fs.readFileSync(files.studentPhoto.path);
-      student.studentPhoto.contentType = files.studentPhoto.type;
-    }
+    // if (files.studentPhoto) {
+    //   if (files.studentPhoto.size > 1000000) {
+    //     return res.status(400).json({
+    //       error: "Image should be less than 1mb in size",
+    //     });
+    //   }
+    //   student.studentPhoto.data = fs.readFileSync(files.studentPhoto.path);
+    //   student.studentPhoto.contentType = files.studentPhoto.type;
+    // }
 
     student.save((err, result) => {
       if (err) {
@@ -77,14 +77,14 @@ exports.update = (req, res) => {
     let student = req.student;
     student = _.extend(student, fields);
 
-    if (files.studentPhoto) {
-      if (files.studentPhoto.size > 1000000) {
+    if (files.photo) {
+      if (files.photo.size > 1000000) {
         return res.status(400).json({
           error: "Image should be less than 1mb in size",
         });
       }
-      student.studentPhoto.data = fs.readFileSync(files.studentPhoto.path);
-      student.studentPhoto.contentType = files.studentPhoto.type;
+      student.photo.data = fs.readFileSync(files.photo.path);
+      student.photo.contentType = files.photo.type;
     }
 
     student.save((err, result) => {
@@ -93,7 +93,7 @@ exports.update = (req, res) => {
           error: errorHandler(err),
         });
       }
-      res.json(result);
+      res.json({ result, message: "Edit student successfully." });
     });
   });
 };
@@ -110,10 +110,10 @@ exports.listByClassroom = (req, res) => {
     });
 };
 
-exports.studentPhoto = (req, res, next) => {
-  if (req.student.studentPhoto.data) {
-    res.set(("Content-Type", req.student.studentPhoto.contentType));
-    return res.send(req.student.studentPhoto.data);
+exports.getStudentPhoto = (req, res, next) => {
+  if (req.student.photo.data) {
+    res.set(("Content-Type", req.student.photo.contentType));
+    return res.send(req.student.photo.data);
   }
   next();
 };
