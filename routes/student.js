@@ -9,7 +9,6 @@ const {
 } = require("../controllers/student");
 const { classroomById } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
-const { userById } = require("../controllers/user");
 
 router.post("/students/:classroomId", requireSignin, isAuth, create);
 router.put("/students/:studentId", requireSignin, isAuth, update);
