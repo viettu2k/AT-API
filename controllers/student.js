@@ -28,7 +28,8 @@ exports.create = (req, res) => {
       });
     }
 
-    let student = new Student(fields);
+    const { _id } = req.classroom;
+    let student = new Student({ ...fields, classId: _id });
 
     if (files.studentPhoto) {
       if (files.studentPhoto.size > 1000000) {
@@ -97,4 +98,16 @@ exports.update = (req, res) => {
       res.json(result);
     });
   });
+};
+
+exports.listByClass = (req, res) => {
+  Student.find({ classId: req.classroom._id })
+    .populate("classId", "_id")
+    .sort("-createdAt")
+    .exec((err, classRooms) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json(classRooms);
+    });
 };
