@@ -111,3 +111,11 @@ exports.listByClass = (req, res) => {
       res.json(classRooms);
     });
 };
+
+exports.studentPhoto = (req, res, next) => {
+  if (req.student.studentPhoto.data) {
+    res.set(("Content-Type", req.student.studentPhoto.contentType));
+    return res.send(req.student.studentPhoto.data);
+  }
+  next();
+};

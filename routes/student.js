@@ -12,11 +12,12 @@ const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
 router.post("/students/:classroomId", requireSignin, isAuth, create);
-router.put("/students/:studentById", requireSignin, isAuth, update);
-router.delete("/students/:studentById", requireSignin, isAuth, remove);
+router.put("/students/:studentId", requireSignin, isAuth, update);
+router.delete("/students/:studentId", requireSignin, isAuth, remove);
 router.get("/students/:classroomId", requireSignin, isAuth, listByClassroom);
+router.get("/students/photo/:studentId", userPhoto);
 
-router.param("userId", userById);
+router.param("studentId", studentById);
 router.param("classroomId", classroomById);
 
 module.exports = router;
