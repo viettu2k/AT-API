@@ -20,7 +20,7 @@ router.delete(
   isAuth,
   remove
 );
-router.get("/classrooms/:userId", requireSignin, isAuth, listByUser);
+router.get("/classrooms/:classroomId", requireSignin, isAuth, listByUser);
 
 router.param("userId", userById);
 router.param("classroomId", classroomById);
