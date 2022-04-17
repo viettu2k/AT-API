@@ -4,6 +4,20 @@ const fs = require("fs");
 const Student = require("../models/student");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
+exports.studentById = (req, res, next, id) => {
+  Student.findById(id)
+    .populate("category")
+    .exec((err, student) => {
+      if (err || !student) {
+        return res.status(400).json({
+          error: "Product not found",
+        });
+      }
+      req.student = student;
+      next();
+    });
+};
+
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
@@ -38,15 +52,15 @@ exports.create = (req, res) => {
 };
 
 exports.remove = (req, res) => {
-  let product = req.product;
-  product.remove((err, deletedProduct) => {
+  let student = req.student;
+  student.remove((err, deletedStudent) => {
     if (err) {
       return res.status(400).json({
         error: errorHandler(err),
       });
     }
     res.json({
-      message: "Product deleted successfully",
+      message: "Student deleted successfully",
     });
   });
 };
