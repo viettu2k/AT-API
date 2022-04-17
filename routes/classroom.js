@@ -12,7 +12,7 @@ const {
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.get("/classrooms/:classroomId", requireSignin, isAuth, read);
+router.get("/classrooms/:userId/:classroomId", requireSignin, isAuth, read);
 router.post("/classrooms/:userId", requireSignin, isAuth, create);
 router.put("/classrooms/:userId/:classroomId", requireSignin, isAuth, update);
 router.delete(
