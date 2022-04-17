@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const classroomSchema = new mongoose.Schema(
+const studentSchema = new mongoose.Schema(
   {
     studentId: String,
     studentName: {
@@ -18,4 +18,4 @@ const classroomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Classroom", classroomSchema);
+module.exports = mongoose.model("Student", studentSchema);
