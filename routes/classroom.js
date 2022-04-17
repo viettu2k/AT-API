@@ -7,6 +7,7 @@ const {
   listByUser,
   classroomById,
   remove,
+  read,
 } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");

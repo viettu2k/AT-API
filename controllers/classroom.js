@@ -16,6 +16,10 @@ exports.classroomById = (req, res, next, id) => {
   });
 };
 
+exports.read = (req, res) => {
+  return res.json(req.classroom);
+};
+
 exports.create = (req, res) => {
   const classroom = new Classroom({
     ...req.body,
