@@ -15,7 +15,7 @@ const { userById } = require("../controllers/user");
 
 router.post("/students/:userId/:classroomId", requireSignin, isAuth, create);
 router.put("/students/:studentId", requireSignin, isAuth, update);
-router.delete("/students/:studentId", requireSignin, isAuth, remove);
+router.delete("/students/:userId/:studentId", requireSignin, isAuth, remove);
 router.get(
   "/students/:userId/:classroomId",
   requireSignin,
