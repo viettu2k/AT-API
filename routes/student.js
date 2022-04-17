@@ -16,7 +16,12 @@ const { userById } = require("../controllers/user");
 router.post("/students/:userId/:classroomId", requireSignin, isAuth, create);
 router.put("/students/:studentId", requireSignin, isAuth, update);
 router.delete("/students/:studentId", requireSignin, isAuth, remove);
-router.get("/students/:classroomId", requireSignin, isAuth, listByClassroom);
+router.get(
+  "/students/:userId/:classroomId",
+  requireSignin,
+  isAuth,
+  listByClassroom
+);
 router.get("/students/photo/:studentId", studentPhoto);
 
 router.param("studentId", studentById);
