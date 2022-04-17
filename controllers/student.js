@@ -5,17 +5,15 @@ const Student = require("../models/student");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.studentById = (req, res, next, id) => {
-  Student.findById(id)
-    .populate("category")
-    .exec((err, student) => {
-      if (err || !student) {
-        return res.status(400).json({
-          error: "Product not found",
-        });
-      }
-      req.student = student;
-      next();
-    });
+  Student.findById(id).exec((err, student) => {
+    if (err || !student) {
+      return res.status(400).json({
+        error: "Student not found",
+      });
+    }
+    req.student = student;
+    next();
+  });
 };
 
 exports.create = (req, res) => {
