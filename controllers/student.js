@@ -47,7 +47,7 @@ exports.create = (req, res) => {
           error: errorHandler(err),
         });
       }
-      res.json(result);
+      res.json({ result, message: "Adding a student successfully." });
     });
   });
 };
@@ -100,7 +100,7 @@ exports.update = (req, res) => {
   });
 };
 
-exports.listByClass = (req, res) => {
+exports.listByClassroom = (req, res) => {
   Student.find({ classId: req.classroom._id })
     .populate("classId", "_id")
     .sort("-createdAt")

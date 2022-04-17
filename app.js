@@ -11,14 +11,15 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const classroomRoutes = require("./routes/classroom");
+const studentRoutes = require("./routes/student");
 
 // app
 const app = express();
 
 // connect db
 mongoose
-    .connect(process.env.DATABASE)
-    .then(() => console.log("DB connected :D"));
+  .connect(process.env.DATABASE)
+  .then(() => console.log("DB connected :D"));
 
 // middlewares
 app.use(morgan("dev"));
@@ -29,24 +30,25 @@ app.use(express.json({ limit: "25mb" }));
 
 // apiDocs
 app.get("/", (req, res) => {
-    fs.readFile("docs/apiDocs.json", (err, data) => {
-        if (err) {
-            res.status(400).json({
-                error: err,
-            });
-        }
-        const docs = JSON.parse(data);
-        res.json(docs);
-    });
+  fs.readFile("docs/apiDocs.json", (err, data) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+    const docs = JSON.parse(data);
+    res.json(docs);
+  });
 });
 
 // routes middleware
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", classroomRoutes);
+app.use("/api", studentRoutes);
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
