@@ -75,24 +75,20 @@ exports.update = (req, res) => {
       });
     }
 
-    let product = req.product;
-    product = _.extend(product, fields);
+    let student = req.student;
+    student = _.extend(student, fields);
 
-    // 1kb = 1000
-    // 1mb = 1000000
-
-    if (files.photo) {
-      // console.log("FILES PHOTO: ", files.photo);
-      if (files.photo.size > 1000000) {
+    if (files.studentPhoto) {
+      if (files.studentPhoto.size > 1000000) {
         return res.status(400).json({
           error: "Image should be less than 1mb in size",
         });
       }
-      product.photo.data = fs.readFileSync(files.photo.path);
-      product.photo.contentType = files.photo.type;
+      student.studentPhoto.data = fs.readFileSync(files.studentPhoto.path);
+      student.studentPhoto.contentType = files.studentPhoto.type;
     }
 
-    product.save((err, result) => {
+    student.save((err, result) => {
       if (err) {
         return res.status(400).json({
           error: errorHandler(err),
