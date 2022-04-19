@@ -117,3 +117,28 @@ exports.getStudentPhoto = (req, res, next) => {
   }
   next();
 };
+
+exports.importStudentList = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { classId, students } = req.body;
+    students.map(async (student) => {
+      const studentDB = await new Student({
+        studentId: student.ID,
+        studentName: student.Name,
+        classId,
+      });
+      studentDB.save((err, result) => {
+        if (err) {
+          return res.status(400).json({ error: err });
+        }
+      });
+    });
+    res.json({
+      message: "Import Successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Something went wrong. Please try again");
+  }
+};
