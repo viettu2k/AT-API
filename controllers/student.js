@@ -19,11 +19,17 @@ exports.studentById = (req, res, next, id) => {
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, async (err, fields, files) => {
     if (err) {
       return res.status(400).json({
         error: "Image could not be uploaded",
       });
+    }
+
+    const studentExits = await Student.exists({ studentId: fields.studentId });
+
+    if (studentExits.classId === fields.classId) {
+      return res.status(409).send("The student has been already in class.");
     }
 
     const { _id } = req.classroom;
