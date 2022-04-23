@@ -9,16 +9,6 @@ const classroomSchema = new mongoose.Schema(
       required: true,
       maxlength: 50,
     },
-    participants: [
-      {
-        studentId: String,
-        studentName: String,
-        studentPhoto: {
-          data: Buffer,
-          contentType: String,
-        },
-      },
-    ],
     createdBy: { type: ObjectId, ref: "User" },
   },
   { timestamps: true }
