@@ -28,22 +28,16 @@ exports.create = (req, res) => {
 
     const studentExits = await Student.exists({ studentId: fields.studentId });
 
+    console.log(studentExits);
+
     if (studentExits.classId === fields.classId) {
-      return res.status(409).send("The student has been already in class.");
+      return res
+        .status(409)
+        .json({ error: "The student has been already in class." });
     }
 
     const { _id } = req.classroom;
     let student = new Student({ ...fields, classId: _id });
-
-    // if (files.studentPhoto) {
-    //   if (files.studentPhoto.size > 1000000) {
-    //     return res.status(400).json({
-    //       error: "Image should be less than 1mb in size",
-    //     });
-    //   }
-    //   student.studentPhoto.data = fs.readFileSync(files.studentPhoto.path);
-    //   student.studentPhoto.contentType = files.studentPhoto.type;
-    // }
 
     student.save((err, result) => {
       if (err) {
