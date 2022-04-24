@@ -9,12 +9,12 @@ const {
   // listByClassroom,
   // getStudentPhoto,
   // importStudentList,
-} = require("../controllers/student");
+} = require("../controllers/attendance");
 const { classroomById } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.post("/attendances/:userId", create);
+router.post("/attendances", create);
 
 // router.post(
 //   "/students/import-file/:userId",

@@ -1,4 +1,5 @@
 const Attendance = require("../models/attendance");
+const Student = require("../models/student");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 const fs = require("fs");
@@ -19,16 +20,16 @@ exports.read = (req, res) => {
   return res.json(req.attendance);
 };
 
-exports.create = (req, res) => {
-  const students = Student.find({ classId: req.classroom._id }).select(
-    "-photo"
-  );
-  console.log(students);
+exports.create = async (req, res) => {
+  const { classId } = req.body;
+  const participants = await Student.find({ classId }).select("-photo");
 
-  const attendance = new Attendance({
+  let attendance = new Attendance({
     ...req.body,
-    createdBy: req.profile._id,
   });
+
+  attendance = _.extend(attendance, { participants });
+
   attendance.save((err, data) => {
     if (err) {
       return res.status(400).json({
