@@ -101,6 +101,7 @@ exports.update = (req, res) => {
 exports.listByClassroom = (req, res) => {
   Student.find({ classId: req.classroom._id })
     .populate("classId", "_id")
+    .select("-photo")
     .sort("-createdAt")
     .exec((err, classRooms) => {
       if (err) {
