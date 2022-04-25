@@ -8,12 +8,10 @@ const attendanceSchema = new mongoose.Schema(
         studentName: String,
         studentId: String,
         status: { type: Boolean, default: false },
-        ID: { type: ObjectId, ref: "Student" },
       },
     ],
     timeStart: Date,
     timeEnd: Date,
-    createdBy: { type: ObjectId, ref: "User" },
     classId: { type: ObjectId, ref: "Classroom" },
   },
   { timestamps: true }
