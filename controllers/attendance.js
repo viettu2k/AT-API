@@ -38,3 +38,16 @@ exports.create = async (req, res) => {
     res.json({ message: "Created successfully", data });
   });
 };
+
+exports.update = (req, res) => {
+  let attendance = req.attendance;
+  attendance = _.extend(attendance, req.body);
+  attendance.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
+};

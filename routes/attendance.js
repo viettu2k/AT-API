@@ -3,7 +3,8 @@ const router = express.Router();
 
 const {
   create,
-  // update,
+  attendanceById,
+  update,
   // studentById,
   // remove,
   // listByClassroom,
@@ -14,7 +15,8 @@ const { classroomById } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.post("/attendances", create);
+router.post("/attendances", requireSignin, isAuth, create);
+router.put("/attendances/:attendanceId", requireSignin, isAuth, update);
 
 // router.post(
 //   "/students/import-file/:userId",
@@ -24,7 +26,6 @@ router.post("/attendances", create);
 // );
 // router.get("/students/photo/:studentId", getStudentPhoto);
 // router.post("/students/:userId/:classroomId", requireSignin, isAuth, create);
-// router.put("/students/:userId/:studentId", requireSignin, isAuth, update);
 // router.delete("/students/:userId/:studentId", requireSignin, isAuth, remove);
 // router.get(
 //   "/students/:userId/:classroomId",
@@ -35,5 +36,6 @@ router.post("/attendances", create);
 
 router.param("userId", userById);
 router.param("classroomId", classroomById);
+router.param("attendanceId", attendanceById);
 
 module.exports = router;
