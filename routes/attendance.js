@@ -5,6 +5,7 @@ const {
   create,
   attendanceById,
   update,
+  automaticallyAttendance,
   // studentById,
   // remove,
   // listByClassroom,
@@ -16,6 +17,7 @@ const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
 router.post("/attendances", requireSignin, isAuth, create);
+router.post("/attendances/automatic", automaticallyAttendance);
 router.put("/attendances/:attendanceId", requireSignin, isAuth, update);
 
 // router.post(

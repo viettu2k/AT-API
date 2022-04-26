@@ -25,20 +25,14 @@ exports.create = (req, res) => {
         error: "Image could not be uploaded",
       });
     }
-
     const studentExits = await Student.exists({ studentId: fields.studentId });
-
-    console.log(studentExits);
-
     if (studentExits.classId === fields.classId) {
       return res
         .status(409)
         .json({ error: "The student has been already in class." });
     }
-
     const { _id } = req.classroom;
     let student = new Student({ ...fields, classId: _id });
-
     student.save((err, result) => {
       if (err) {
         return res.status(400).json({
@@ -121,7 +115,6 @@ exports.getStudentPhoto = (req, res, next) => {
 
 exports.importStudentList = async (req, res) => {
   try {
-    console.log(req.body);
     const { classId, students } = req.body;
     students.map(async (student) => {
       const studentDB = await new Student({
@@ -139,7 +132,6 @@ exports.importStudentList = async (req, res) => {
       message: "Import Successfully.",
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).send("Something went wrong. Please try again");
   }
 };
