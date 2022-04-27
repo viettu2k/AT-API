@@ -27,7 +27,8 @@ async function run() {
   ]);
   await page.goto(googleMeet);
 
-  await page.waitForTimeout(1000);
+  await page.waitForSelector("VfPpkd-vQzf8d");
+  // await page.waitForTimeout(1000);
 
   const xp = '//*[@class="VfPpkd-vQzf8d"]';
   const [el] = await page.$x(xp);
@@ -35,7 +36,8 @@ async function run() {
     console.log("click");
     b.click();
   });
-  await page.waitForTimeout(3000);
+  // await page.waitForTimeout(3000);
+  await page.waitForSelector(".XEazBc.adnwBd");
   const grabStudentNames = await page.evaluate(async () => {
     const nameTags = document.querySelectorAll(".XEazBc.adnwBd");
     let studentNames = [];
@@ -48,5 +50,9 @@ async function run() {
   console.log(grabStudentNames);
 
   await browser.close();
+
+  // page.on("dialog", async (dialog) => {
+  //   await dialog.dismiss();
+  // });
 }
 run();

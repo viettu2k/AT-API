@@ -70,12 +70,12 @@ exports.automaticallyAttendance = (req, res) => {
 
 exports.automaticallyAttendance = async (req, res) => {
   try {
+    const { googleMeet } = req.body;
+    const googleLogin = "https://accounts.google.com/signin";
     const browser = await puppeteer.launch({
       headless: false,
       args: ["--use-fake-ui-for-media-stream"],
     });
-    const { googleMeet } = req.body;
-    const googleLogin = "https://accounts.google.com/signin";
     const page = await browser.newPage();
     await page.goto(googleLogin);
     // await page.waitFor(1000);
@@ -93,7 +93,8 @@ exports.automaticallyAttendance = async (req, res) => {
     ]);
     await page.goto(googleMeet);
 
-    await page.waitForTimeout(1000);
+    await page.waitForSelector("VfPpkd-vQzf8d");
+    // await page.waitForTimeout(1000);
 
     const xp = '//*[@class="VfPpkd-vQzf8d"]';
     const [el] = await page.$x(xp);
@@ -101,7 +102,8 @@ exports.automaticallyAttendance = async (req, res) => {
       console.log("click");
       b.click();
     });
-    await page.waitForTimeout(3000);
+    // await page.waitForTimeout(3000);
+    await page.waitForSelector(".XEazBc.adnwBd");
     const grabStudentNames = await page.evaluate(async () => {
       const nameTags = document.querySelectorAll(".XEazBc.adnwBd");
       let studentNames = [];

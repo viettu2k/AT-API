@@ -117,16 +117,22 @@ exports.importStudentList = async (req, res) => {
   try {
     const { classId, students } = req.body;
     students.map(async (student) => {
-      const studentDB = await new Student({
+      const studentExits = await Student.exists({
         studentId: student.ID,
-        studentName: student.Name,
-        classId,
       });
-      studentDB.save((err, result) => {
-        if (err) {
-          return res.status(400).json({ error: err });
-        }
-      });
+
+      if (!studentExits || studentExits.classId !== classId) {
+        const studentDB = await new Student({
+          studentId: student.ID,
+          studentName: student.Name,
+          classId,
+        });
+        studentDB.save((err, result) => {
+          if (err) {
+            return res.status(400).json({ error: err });
+          }
+        });
+      }
     });
     res.json({
       message: "Import Successfully.",
