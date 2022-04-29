@@ -55,19 +55,6 @@ exports.update = (req, res) => {
   });
 };
 
-exports.automaticallyAttendance = (req, res) => {
-  let attendance = req.attendance;
-  attendance = _.extend(attendance, req.body);
-  attendance.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: errorHandler(err),
-      });
-    }
-    res.json(data);
-  });
-};
-
 exports.automaticallyAttendance = async (req, res) => {
   try {
     const { googleMeet } = req.body;
@@ -122,4 +109,16 @@ exports.automaticallyAttendance = async (req, res) => {
   } catch (error) {
     return res.status(500).send("Something went wrong. Please try again");
   }
+};
+
+exports.listAttendanceByClass = (req, res) => {
+  Attendance.find({ classId: req.classroom._id })
+    .populate("classId", "_id")
+    .sort("-createdAt")
+    .exec((err, attendances) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json(attendances);
+    });
 };

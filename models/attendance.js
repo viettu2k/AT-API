@@ -10,8 +10,14 @@ const attendanceSchema = new mongoose.Schema(
         status: { type: Boolean, default: false },
       },
     ],
-    timeStart: Date,
-    timeEnd: Date,
+    timeStart: {
+      type: Date,
+      required: [true, "Please tell us the time start"],
+    },
+    timeEnd: {
+      type: Date,
+      required: [true, "Please tell us the time end"],
+    },
     classId: { type: ObjectId, ref: "Classroom" },
   },
   { timestamps: true }

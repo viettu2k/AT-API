@@ -6,6 +6,7 @@ const {
   attendanceById,
   update,
   automaticallyAttendance,
+  listAttendanceByClass,
   // studentById,
   // remove,
   // listByClassroom,
@@ -19,6 +20,12 @@ const { userById } = require("../controllers/user");
 router.post("/attendances", requireSignin, isAuth, create);
 router.post("/attendances/automatic", automaticallyAttendance);
 router.put("/attendances/:attendanceId", requireSignin, isAuth, update);
+router.get(
+  "/attendances/:classroomId",
+  requireSignin,
+  isAuth,
+  listAttendanceByClass
+);
 
 // router.post(
 //   "/students/import-file/:userId",
