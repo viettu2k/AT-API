@@ -24,7 +24,9 @@ exports.read = (req, res) => {
 
 exports.create = async (req, res) => {
   const { classId } = req.body;
-  const participants = await Student.find({ classId }).select("-photo");
+  const participants = await Student.find({ classId })
+    .select("-photo")
+    .sort("-createdAt");
 
   let attendance = new Attendance({
     ...req.body,
@@ -35,7 +37,7 @@ exports.create = async (req, res) => {
   attendance.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: errorHandler(err),
+        error: err,
       });
     }
     res.json({ message: "Created successfully", data });

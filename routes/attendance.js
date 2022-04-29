@@ -17,11 +17,11 @@ const { classroomById } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.post("/attendances", requireSignin, isAuth, create);
+router.post("/attendances/:userId", requireSignin, isAuth, create);
 router.post("/attendances/automatic", automaticallyAttendance);
 router.put("/attendances/:attendanceId", requireSignin, isAuth, update);
 router.get(
-  "/attendances/:classroomId",
+  "/attendances/:userId/:classroomId",
   requireSignin,
   isAuth,
   listAttendanceByClass
