@@ -8,7 +8,7 @@ const {
   automaticallyAttendance,
   listAttendanceByClass,
   // studentById,
-  // remove,
+  remove,
   // listByClassroom,
   // getStudentPhoto,
   // importStudentList,
@@ -25,6 +25,12 @@ router.get(
   requireSignin,
   isAuth,
   listAttendanceByClass
+);
+router.delete(
+  "/attendances/:userId/:attendanceId",
+  requireSignin,
+  isAuth,
+  remove
 );
 
 // router.post(

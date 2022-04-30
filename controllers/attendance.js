@@ -7,10 +7,10 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
 
 exports.attendanceById = (req, res, next, id) => {
-  Attendance.findById(id).exec((err, classroom) => {
-    if (err || !classroom) {
+  Attendance.findById(id).exec((err, attendance) => {
+    if (err || !attendance) {
       return res.status(400).json({
-        error: "Classroom does not exist",
+        error: "Attendance does not exist",
       });
     }
     req.attendance = attendance;
@@ -123,4 +123,18 @@ exports.listAttendanceByClass = (req, res) => {
       }
       res.json(attendances);
     });
+};
+
+exports.remove = (req, res) => {
+  let attendance = req.attendance;
+  attendance.remove((err, deletedAttendance) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({
+      message: "Check Attendance deleted successfully",
+    });
+  });
 };
