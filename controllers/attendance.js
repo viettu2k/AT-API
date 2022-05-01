@@ -72,7 +72,6 @@ exports.automaticallyAttendance = async (req, res) => {
     });
     const page = await browser.newPage();
     await page.goto(googleLogin);
-    // await page.waitFor(1000);
     await page.waitForSelector('input[type="email"]');
     await page.type('input[type="email"]', "doazvjettu0012");
     await Promise.all([
