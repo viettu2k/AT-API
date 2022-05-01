@@ -17,7 +17,7 @@ const { classroomById } = require("../controllers/classroom");
 const { requireSignin, isAuth } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.post("/attendances/automatic", automaticallyAttendance);
+router.post("/attendances/automatic/:attendanceId", automaticallyAttendance);
 router.post("/attendances/:userId", requireSignin, isAuth, create);
 router.put("/attendances/:userId/:attendanceId", requireSignin, isAuth, update);
 router.get(

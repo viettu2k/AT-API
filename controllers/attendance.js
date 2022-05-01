@@ -59,6 +59,7 @@ exports.update = (req, res) => {
 
 exports.automaticallyAttendance = async (req, res) => {
   try {
+    let attendance = req.attendance;
     const { googleMeet } = req.body;
     const googleLogin = "https://accounts.google.com/signin";
     const browser = await puppeteer.launch({
@@ -105,12 +106,25 @@ exports.automaticallyAttendance = async (req, res) => {
       });
       return studentNames;
     });
-
     const result = grabStudentNames;
-
     await browser.close();
-    res.json({
-      data: result,
+
+    for (let i = 0; i < attendance.participants.length; i++) {
+      for (let j = 0; j < result.length; j++) {
+        const id = attendance.participants[i].studentId.slice(-4);
+        if (result[j].includes(id)) {
+          attendance.participants[i].status = true;
+        }
+      }
+    }
+
+    attendance.save((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(data);
     });
   } catch (error) {
     console.log(error);
