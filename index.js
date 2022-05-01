@@ -1,14 +1,19 @@
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const googleLogin = "https://accounts.google.com/signin";
-const googleMeet = "https://meet.google.com/cyy-ajdu-wxe";
+const googleMeet = "https://meet.google.com/kwk-bchb-bwk";
 
 puppeteer.use(StealthPlugin());
 
 async function run() {
   const browser = await puppeteer.launch({
     headless: false,
-    args: ["--use-fake-ui-for-media-stream"],
+    executablePath:
+      "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    args: [
+      "--use-fake-ui-for-media-stream",
+      "--user-data-dir=C:\\Users\\d0azvjettu\\AppData\\Local\\Google\\Chrome\\Profile 1",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(googleLogin);
@@ -27,8 +32,8 @@ async function run() {
   ]);
   await page.goto(googleMeet);
 
-  await page.waitForSelector("VfPpkd-vQzf8d");
-  // await page.waitForTimeout(1000);
+  // await page.waitForSelector("VfPpkd-vQzf8d");
+  await page.waitForTimeout(1000);
 
   const xp = '//*[@class="VfPpkd-vQzf8d"]';
   const [el] = await page.$x(xp);

@@ -63,7 +63,10 @@ exports.automaticallyAttendance = async (req, res) => {
     const googleLogin = "https://accounts.google.com/signin";
     const browser = await puppeteer.launch({
       headless: false,
-      args: ["--use-fake-ui-for-media-stream"],
+      args: [
+        "--use-fake-ui-for-media-stream",
+        // "--user-data-dir=/user/data/directory/profile_n",
+      ],
     });
     const page = await browser.newPage();
     await page.goto(googleLogin);
@@ -82,8 +85,8 @@ exports.automaticallyAttendance = async (req, res) => {
     ]);
     await page.goto(googleMeet);
 
-    await page.waitForSelector("VfPpkd-vQzf8d");
-    // await page.waitForTimeout(1000);
+    // await page.waitForSelector("VfPpkd-vQzf8d");
+    await page.waitForTimeout(1000);
 
     const xp = '//*[@class="VfPpkd-vQzf8d"]';
     const [el] = await page.$x(xp);
