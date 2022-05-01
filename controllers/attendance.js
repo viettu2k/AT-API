@@ -66,6 +66,8 @@ exports.automaticallyAttendance = async (req, res) => {
       args: [
         "--use-fake-ui-for-media-stream",
         // "--user-data-dir=/user/data/directory/profile_n",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
       ],
     });
     const page = await browser.newPage();
@@ -112,6 +114,7 @@ exports.automaticallyAttendance = async (req, res) => {
       data: result,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).send("Something went wrong. Please try again");
   }
 };
