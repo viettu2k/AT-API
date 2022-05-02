@@ -60,7 +60,7 @@ exports.update = (req, res) => {
 exports.automaticallyAttendance = async (req, res) => {
   try {
     let attendance = req.attendance;
-    const { googleMeet } = req.body;
+    const { meetLink } = req.body;
     const googleLogin = "https://accounts.google.com/signin";
     const browser = await puppeteer.launch({
       headless: false,
@@ -85,11 +85,9 @@ exports.automaticallyAttendance = async (req, res) => {
       await page.keyboard.press("Enter"),
       page.waitForNavigation({ waitUntil: "networkidle2" }),
     ]);
-    await page.goto(googleMeet);
-
+    await page.goto(meetLink);
     // await page.waitForSelector("VfPpkd-vQzf8d");
     await page.waitForTimeout(1000);
-
     const xp = '//*[@class="VfPpkd-vQzf8d"]';
     const [el] = await page.$x(xp);
     await el.evaluate((b) => {
