@@ -96,3 +96,12 @@ exports.userPhoto = (req, res, next) => {
   }
   next();
 };
+
+exports.getListUser = (req, res) => {
+  User.find((err, users) => {
+    if (err) {
+      return res.status(400).json({ error: err });
+    }
+    res.json(users);
+  }).select("-photo");
+};

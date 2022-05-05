@@ -9,6 +9,7 @@ const {
   update,
   changePassword,
   userPhoto,
+  getListUser,
 } = require("../controllers/user");
 
 router.get("/users/:userId", requireSignin, isAuth, read);
@@ -20,6 +21,7 @@ router.put(
 );
 router.put("/users/:userId", requireSignin, isAuth, update);
 router.get("/users/photo/:userId", userPhoto);
+router.get("/users", getListUser);
 
 router.param("userId", userById);
 
