@@ -105,3 +105,15 @@ exports.getListUser = (req, res) => {
     res.json(users);
   }).select("-photo");
 };
+
+exports.deleteUser = (req, res, next) => {
+  let user = req.profile;
+  user.remove((err, user) => {
+    if (err) {
+      return res.status(400).json({ err: err });
+    }
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.json({ message: "User deleted successfully!" });
+  });
+};
