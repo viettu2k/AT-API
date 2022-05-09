@@ -26,7 +26,7 @@ exports.create = (req, res) => {
       });
     }
     const studentExits = await Student.exists({ studentId: fields.studentId });
-    if (studentExits.classId === fields.classId) {
+    if (studentExits && studentExits.classId === fields.classId) {
       return res
         .status(409)
         .json({ error: "The student has been already in class." });
