@@ -66,7 +66,6 @@ exports.automaticallyAttendance = async (req, res) => {
       headless: false,
       args: [
         "--use-fake-ui-for-media-stream",
-        // "--user-data-dir=/user/data/directory/profile_n",
         "--no-sandbox",
         "--disable-setuid-sandbox",
       ],
@@ -86,15 +85,17 @@ exports.automaticallyAttendance = async (req, res) => {
       page.waitForNavigation({ waitUntil: "networkidle2" }),
     ]);
     await page.goto(meetLink);
-    // await page.waitForSelector("VfPpkd-vQzf8d");
     await page.waitForTimeout(1000);
+    await page.keyboard.down("ControlLeft");
+    await page.keyboard.press("KeyD");
+    await page.keyboard.press("KeyE");
+    await page.keyboard.up("ControlLeft");
     const xp = '//*[@class="VfPpkd-vQzf8d"]';
     const [el] = await page.$x(xp);
     await el.evaluate((b) => {
       console.log("click");
       b.click();
     });
-    // await page.waitForTimeout(3000);
     await page.waitForSelector(".XEazBc.adnwBd");
     const grabStudentNames = await page.evaluate(async () => {
       const nameTags = document.querySelectorAll(".XEazBc.adnwBd");
@@ -125,7 +126,7 @@ exports.automaticallyAttendance = async (req, res) => {
       res.json(data);
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).send("Something went wrong. Please try again");
   }
 };
