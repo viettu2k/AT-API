@@ -94,9 +94,8 @@ exports.update = (req, res) => {
 
 exports.listByClassroom = (req, res) => {
   Student.find({ classId: req.classroom._id })
-    .populate("classId", "_id")
     .select("-photo")
-    .sort("-createdAt")
+    .sort("createdAt")
     .exec((err, classRooms) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -117,16 +116,18 @@ exports.importStudentList = async (req, res) => {
   try {
     const { classId, students } = req.body;
     students.map(async (student) => {
-      const studentExits = await Student.exists({
+      const studentExits = await Student.findOne({
         studentId: student.ID,
+        classId,
       });
 
-      if (!studentExits || studentExits.classId !== classId) {
+      if (!studentExits || !String(studentExits.classId).includes(classId)) {
         const studentDB = await new Student({
           studentId: student.ID,
           studentName: student.Name,
           classId,
         });
+
         studentDB.save((err, result) => {
           if (err) {
             return res.status(400).json({ error: err });
