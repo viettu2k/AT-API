@@ -1,16 +1,19 @@
-const puppeteer = require('puppeteer-extra');
-// const puppeteer = require('puppeteer');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+// const puppeteer = require('puppeteer-extra');
+const puppeteer = require('puppeteer');
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const googleLogin = 'https://accounts.google.com/signin';
-puppeteer.use(StealthPlugin());
+// puppeteer.use(StealthPlugin());
 
 async function run(googleMeet) {
     const browser = await puppeteer.launch({
         headless: false,
+        executablePath: 'C://Program Files//Google//Chrome//Application//chrome.exe',
         args: [
             '--use-fake-ui-for-media-stream',
             '--no-sandbox',
             '--disable-setuid-sandbox',
+            '--user-data-dir=%d0azvjettu%\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1',
+            // '--profile-directory=Profile 1',
         ],
     });
 
@@ -70,24 +73,24 @@ async function run(googleMeet) {
     //     path: 'test.png',
     // });
 
-    await page.evaluate(async() => {
-        const selectors = Array.from(
-            document.querySelectorAll(
-                '#ow3 > div.T4LgNb > div > div:nth-child(10) > div.crqnQb > div:nth-child(2) > div.zWfAib.eFmLfc.nrxduf.a1pVef > div:nth-child(2) > div.koV58.Zi94Db > div.LBDzPb > div'
-            )
-        );
-        await Promise.all(
-            selectors.map((img) => {
-                if (img.complete) return;
-                return new Promise((resolve, reject) => {
-                    img.addEventListener('load', resolve);
-                    img.addEventListener('error', reject);
-                });
-            })
-        );
-    });
+    // await page.evaluate(async() => {
+    //     const selectors = Array.from(
+    //         document.querySelectorAll(
+    //             '#ow3 > div.T4LgNb > div > div:nth-child(10) > div.crqnQb > div:nth-child(2) > div.zWfAib.eFmLfc.nrxduf.a1pVef > div:nth-child(2) > div.koV58.Zi94Db > div.LBDzPb > div'
+    //         )
+    //     );
+    //     await Promise.all(
+    //         selectors.map((img) => {
+    //             if (img.complete) return;
+    //             return new Promise((resolve, reject) => {
+    //                 img.addEventListener('load', resolve);
+    //                 img.addEventListener('error', reject);
+    //             });
+    //         })
+    //     );
+    // });
 
-    // console.log(grabStudentNames);
+    console.log(grabStudentNames);
 
     await browser.close();
 
@@ -95,4 +98,4 @@ async function run(googleMeet) {
     //   await dialog.dismiss();
     // });
 }
-run('https://meet.google.com/wvk-fumr-sgk');
+run('https://meet.google.com/tuw-jmza-mvu?pli=1');
