@@ -91,11 +91,12 @@ exports.automaticallyAttendance = async(req, res) => {
         await page.keyboard.press('KeyD');
         await page.keyboard.press('KeyE');
         await page.keyboard.up('ControlLeft');
-        const xp = '//*[@class="VfPpkd-vQzf8d"]';
-        const [el] = await page.$x(xp);
-        await el.evaluate((b) => {
-            console.log('click');
-            b.click();
+        await page.evaluate(() => {
+            document
+                .querySelector(
+                    '#yDmH0d > c-wiz > div > div > div:nth-child(10) > div.crqnQb > div > div.gAGjv > div.vgJExf > div > div > div.d7iDfe.NONs6c > div > div.Sla0Yd > div > div.XCoPyb > div:nth-child(1) > button > span'
+                )
+                .click();
         });
         await page.waitForSelector('.XEazBc.adnwBd');
         const grabStudentNames = await page.evaluate(async() => {
@@ -124,6 +125,7 @@ exports.automaticallyAttendance = async(req, res) => {
                     error: errorHandler(err),
                 });
             }
+            console.log(data);
             res.json(data);
         });
     } catch (error) {
