@@ -1,12 +1,12 @@
-const User = require("../models/user");
-const formidable = require("formidable");
-const _ = require("lodash");
-const fs = require("fs");
+const User = require('../models/user');
+const formidable = require('formidable');
+const _ = require('lodash');
+const fs = require('fs');
 
 exports.userById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err || !user) {
-      return res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: 'User not found' });
     }
     req.profile = user;
     next();
@@ -27,7 +27,7 @@ exports.update = (req, res) => {
     console.log(err);
     if (err) {
       return res.status(400).json({
-        error: "Photo could not be uploaded",
+        error: 'Photo could not be uploaded',
       });
     }
     // save user
@@ -61,12 +61,12 @@ exports.changePassword = (req, res) => {
   User.findById({ _id }, (err, user) => {
     if (err || !user)
       return res.status(401).json({
-        error: "Invalid id!",
+        error: 'Invalid id!',
       });
 
     if (!user.authenticate(password)) {
       return res.status(401).json({
-        error: "Password dont match",
+        error: 'Password dont match',
       });
     }
 
@@ -91,7 +91,7 @@ exports.changePassword = (req, res) => {
 
 exports.userPhoto = (req, res, next) => {
   if (req.profile.photo.data) {
-    res.set(("Content-Type", req.profile.photo.contentType));
+    res.set(('Content-Type', req.profile.photo.contentType));
     return res.send(req.profile.photo.data);
   }
   next();
@@ -103,7 +103,7 @@ exports.getListUser = (req, res) => {
       return res.status(400).json({ error: err });
     }
     res.json(users);
-  }).select("-photo");
+  }).select('-photo');
 };
 
 exports.deleteUser = (req, res, next) => {
@@ -114,6 +114,6 @@ exports.deleteUser = (req, res, next) => {
     }
     user.hashed_password = undefined;
     user.salt = undefined;
-    res.json({ message: "User deleted successfully!" });
+    res.json({ message: 'User deleted successfully!' });
   });
 };

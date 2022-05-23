@@ -101,6 +101,7 @@ exports.automaticallyAttendance = async (req, res) => {
         .click();
     });
     await page.waitForSelector('.XEazBc.adnwBd', { visible: true });
+    await page.waitForTimeout(1000);
     const grabStudentNames = await page.evaluate(async () => {
       const nameTags = document.querySelectorAll('.XEazBc.adnwBd');
       let studentNames = [];
