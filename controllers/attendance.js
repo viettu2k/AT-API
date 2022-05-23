@@ -25,9 +25,7 @@ exports.read = (req, res) => {
 
 exports.create = async(req, res) => {
     const { classId } = req.body;
-    const participants = await Student.find({ classId })
-        .select('-photo')
-        .sort('createdAt');
+    const participants = await Student.find({ classId }).select('-photo');
 
     let attendance = new Attendance({
         ...req.body,

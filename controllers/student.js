@@ -103,7 +103,6 @@ exports.update = (req, res) => {
 exports.listByClassroom = (req, res) => {
     Student.find({ classId: req.classroom._id })
         .select('-photo')
-        .sort('createdAt')
         .exec((err, classRooms) => {
             if (err) {
                 return res.status(400).json({ error: err });
